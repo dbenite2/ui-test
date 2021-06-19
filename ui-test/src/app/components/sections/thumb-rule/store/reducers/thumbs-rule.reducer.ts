@@ -13,8 +13,13 @@ export const initialThumbsState: ThumbsState = {
 
 export const thumbsReducer = createReducer(
   initialThumbsState,
-  on(cardsDataFetched, (state, {cards}) => {
-
+  on(cardsDataFetched, (state, {cards}) => {(
+    ...state,
+      cards: [
+        ...state.cards,
+        cards
+      ]
+  )
   })
 );
 
