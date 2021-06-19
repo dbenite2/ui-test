@@ -26,19 +26,27 @@
     </section>
   </header>
   <section class="button-container">
-    <button class="thumbs-up" aria-label="thumbs up">
+    <button
+      (click)="handleOpinion('up')"
+      class="thumbs-up" aria-label="thumbs up">
       <img
         class="thumbs-icon"
         alt="thumbs-up"
         src="../../../../../../assets/img/thumbs-up.svg">
     </button>
-    <button class="thumbs-down" aria-label="thumbs down">
+    <button
+      (click)="handleOpinion('down')"
+      class="thumbs-down" aria-label="thumbs down">
       <img
         class="thumbs-icon"
         alt="thumbs-down"
         src="../../../../../../assets/img/thumbs-down.svg">
     </button>
-    <button class="vote"> Vote Now </button>
+    <button
+      [disabled]="!chosenOpinion"
+      (click)="emitOpinion()"
+      aria-label="vote now"
+      class="vote"> Vote Now </button>
   </section>
   <footer class="vote-count">
     <div

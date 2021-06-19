@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { VotesModel } from '../../../../../core/models/votes.model';
 
 @Component({
@@ -17,9 +17,17 @@ export class ThumbCardComponent {
   @Input() percentage: VotesModel;
   @Input() viewStyle: number;
   @Input() popularity: string;
-  @Output() vote: boolean;
+  @Output() vote: EventEmitter<string> = new EventEmitter<string>();
+  chosenOpinion: string;
 
   constructor() {
   }
 
+  handleOpinion(opinion: string): void {
+    this.chosenOpinion = opinion;
+  }
+
+  emitOpinion(): void {
+    this.vote.emit(this.chosenOpinion);
+  }
 }

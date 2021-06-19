@@ -6,7 +6,7 @@ import * as cloneDeep from 'lodash/cloneDeep';
 import { DropdownModel } from '../../../../core/models/dropdown.model';
 import { dropdownOptions } from '../../../../utils/constants/dropdown-options.constant';
 import { CardModel } from '../../../../core/models/card.model';
-import {thumbsData} from '../../../../utils/constants/thumbs-data.constant';
+import { thumbsData } from '../../../../utils/constants/thumbs-data.constant';
 import { VotesModel } from '../../../../core/models/votes.model';
 import * as moment from 'moment';
 
@@ -30,15 +30,7 @@ export class ThumbRuleParentComponent implements OnInit {
     this.viewOption = this.formBuilder.group({
       viewOrder: [0]
     });
-    this.cardOptions = this.cardOptions.map(cardInfo => {
-      return {
-        ...cardInfo,
-        picture: `url(../../../../../../assets/img/${cardInfo.picture})`,
-        percentage: {...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative)},
-        lastUpdated: this.calculatePassedTime(cardInfo.lastUpdated),
-        popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down'
-      };
-    });
+    this.parseCardInformation(false);
   }
 
   calculateVotePercentage(positiveVotes: number, negativeVotes: number): VotesModel {
@@ -53,6 +45,42 @@ export class ThumbRuleParentComponent implements OnInit {
 
   calculatePassedTime(timeStamp: string): string {
     return moment(timeStamp).fromNow();
+  }
+
+  parseCardInformation(voted: boolean, voteType?: string, cardNumber?: number): void {
+    if (voted) {
+      this.cardOptions = this.cardOptions.map((cardInfo, index) => {
+        if (index === cardNumber) {
+          return {
+            ...cardInfo,
+            votes: voteType === 'up' ? {
+              ...cardInfo.votes,
+              positive: cardInfo.votes.positive + 1
+            } : {
+              ...cardInfo.votes,
+              negative: cardInfo.votes.negative + 1
+            },
+            percentage: { ...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative) },
+            lastUpdated: this.calculatePassedTime(moment().format()),
+            popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down'
+          };
+        } else {
+          return {
+            ...cardInfo
+          };
+        }
+      });
+    } else {
+      this.cardOptions = this.cardOptions.map(cardInfo => {
+        return {
+          ...cardInfo,
+          picture: `url(../../../../../../assets/img/${cardInfo.picture})`,
+          percentage: { ...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative) },
+          lastUpdated: this.calculatePassedTime(cardInfo.lastUpdated),
+          popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down'
+        };
+      });
+    }
   }
 
 }

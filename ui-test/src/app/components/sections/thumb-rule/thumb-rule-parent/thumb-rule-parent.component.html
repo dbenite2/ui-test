@@ -11,7 +11,8 @@
               'list': viewOption.get('viewOrder').value === 0}"
   class="cards-container">
   <app-thumb-card
-    *ngFor="let card of cardOptions"
+    *ngFor="let card of cardOptions; let i = index"
+    (vote)="parseCardInformation(true, $event, i)"
     [name]="card.name"
     [description]="card.description"
     [picture]="card.picture"

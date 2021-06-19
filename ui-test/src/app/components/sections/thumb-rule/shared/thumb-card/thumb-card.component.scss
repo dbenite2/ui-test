@@ -112,6 +112,24 @@
   background-color: $color-yellow-negative;
 }
 
+@media (min-width: $md + 1) and (max-width: $lg) {
+  .card-container {
+    width: 22rem;
+  }
+}
+
+@media (min-width: $lg) and (max-width: $xxlm) {
+  .card-container {
+    width: 23rem;
+  }
+}
+
+@media (min-width: $xxlm) {
+  .card-container {
+    width: 19.3rem;
+  }
+}
+
 @media (min-width: $md) {
   .list {
     width: 100%;
