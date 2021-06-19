@@ -21,8 +21,8 @@ export class ThumbsRuleEffect {
 
   updateCardData$ = createEffect(() => this.actions$.pipe(
     ofType(updateCardData),
-    map(() => {
-      return cardDataUpdated();
+    map((action) => {
+      return cardDataUpdated({data: action.data, cardId: action.cardId});
     })
   ));
 }

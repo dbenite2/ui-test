@@ -17,6 +17,7 @@ export class ThumbsRuleService {
   }
 
   getCardData(): CardModel[] {
-    return this.cardData;
+    const localData = JSON.parse(localStorage.getItem('thumbsRule'));
+    return localData.cards || this.cardData;
   }
 }

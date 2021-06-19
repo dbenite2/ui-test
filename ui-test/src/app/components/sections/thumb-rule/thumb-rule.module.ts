@@ -7,6 +7,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { ThumbCardComponent } from './shared/thumb-card/thumb-card.component';
 import { ThumbDropdownComponent } from './shared/thumb-dropdown/thumb-dropdown.component';
+import { EffectsModule } from '@ngrx/effects';
+import { ThumbsRuleEffect } from './store/effects/thumbs-rule.effect';
+import { StoreModule } from '@ngrx/store';
+import { metaReducers, reducers } from './store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../../../../environments/environment.prod';
 
 const components = [
   ThumbCardComponent,

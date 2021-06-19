@@ -1,45 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import * as cloneDeep from 'lodash/cloneDeep';
+import { select } from '@ngrx/core';
+import { take, takeUntil } from 'rxjs/operators';
+import * as moment from 'moment';
+import { Subject } from 'rxjs';
 
 import { DropdownModel } from '../../../../core/models/dropdown.model';
 import { dropdownOptions } from '../../../../utils/constants/dropdown-options.constant';
 import { CardModel } from '../../../../core/models/card.model';
-import { thumbsData } from '../../../../utils/constants/thumbs-data.constant';
 import { VotesModel } from '../../../../core/models/votes.model';
-import * as moment from 'moment';
+import { Store } from '@ngrx/store';
+import { fetchCardsData, updateCardData } from '../store/actions/thumbs-rule.action';
+import { selectThumbsCards } from '../store/selectors/thumbs-rule.selector';
 
 @Component({
   selector: 'app-thumb-rule-parent',
   templateUrl: './thumb-rule-parent.component.html',
   styleUrls: ['./thumb-rule-parent.component.scss']
 })
-export class ThumbRuleParentComponent implements OnInit {
+export class ThumbRuleParentComponent implements OnInit, OnDestroy {
 
   dropdownOptions: DropdownModel[];
   cardOptions: CardModel[];
   viewOption: FormGroup;
+  destroyed$ = new Subject<void>();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+              private store: Store) {
     this.dropdownOptions = cloneDeep(dropdownOptions);
-    this.cardOptions = cloneDeep(thumbsData);
   }
 
   ngOnInit(): void {
     this.viewOption = this.formBuilder.group({
       viewOrder: [0]
     });
-    this.cardOptions = this.cardOptions.map(cardInfo => {
-      return {
-        ...cardInfo,
-        picture: `url(../../../../../../assets/img/${cardInfo.picture})`,
-        percentage: { ...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative) },
-        lastUpdated: this.calculatePassedTime(cardInfo.lastUpdated),
-        popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down',
-        voted: false
-      };
+    this.store.select(selectThumbsCards).subscribe((cards: CardModel[]) => {
+      this.cardOptions = cards.map(cardInfo => {
+          return cardInfo.voted ? {...cardInfo} : {
+            ...cardInfo,
+            percentage: { ...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative) },
+            lastUpdated: this.calculatePassedTime(cardInfo.lastUpdated),
+            popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down',
+            voted: false
+          };
+      });
     });
+    this.store.dispatch(fetchCardsData());
   }
 
   calculateVotePercentage(positiveVotes: number, negativeVotes: number): VotesModel {
@@ -57,9 +65,9 @@ export class ThumbRuleParentComponent implements OnInit {
   }
 
   parseCardInformation(voted: boolean, voteType?: string, cardNumber?: number): void {
-    const currentCard = { ...this.cardOptions[cardNumber] };
+    let currentCard = { ...this.cardOptions[cardNumber] };
     if (voted && voteType) {
-      this.cardOptions[cardNumber] = {
+      currentCard = {
         ...currentCard,
         votes: voteType === 'up' ? {
           ...currentCard.votes,
@@ -74,11 +82,17 @@ export class ThumbRuleParentComponent implements OnInit {
         voted: true
       };
     } else {
-      this.cardOptions[cardNumber] = {
+      currentCard = {
         ...currentCard,
         voted: false
       };
     }
+    this.store.dispatch(updateCardData({data: currentCard, cardId: cardNumber}));
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
 }

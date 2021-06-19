@@ -7,15 +7,16 @@ export const fetchCardsData = createAction(
 
 export const cardsDataFetched = createAction(
   '[ThumbsRule Effect] Card data fetched',
-  props<{cards: CardModel[]}>()
+  props<{ cards: CardModel[] }>()
 );
 
 export const updateCardData = createAction(
   '[ThumbsRule] Update card data',
-  props<{data: CardModel[]}>()
+  props<{ data: CardModel, cardId: number }>()
 );
 
 export const cardDataUpdated = createAction(
-  '[ThumbsRule Effect] Card data updated'
+  '[ThumbsRule Effect] Card data updated',
+  props<{ data: CardModel, cardId: number }>()
 );
 
