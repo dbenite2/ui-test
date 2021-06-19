@@ -17,7 +17,8 @@ export class ThumbCardComponent {
   @Input() percentage: VotesModel;
   @Input() viewStyle: number;
   @Input() popularity: string;
-  @Output() vote: EventEmitter<string> = new EventEmitter<string>();
+  @Input() alreadyVoted: boolean;
+  @Output() vote = new EventEmitter<{ selectedOption?: string, voted: boolean }>();
   chosenOpinion: string;
 
   constructor() {
@@ -28,6 +29,10 @@ export class ThumbCardComponent {
   }
 
   emitOpinion(): void {
-    this.vote.emit(this.chosenOpinion);
+    if (!this.alreadyVoted) {
+      this.vote.emit({ selectedOption: this.chosenOpinion, voted: true });
+    } else {
+      this.vote.emit({voted: false});
+    }
   }
 }

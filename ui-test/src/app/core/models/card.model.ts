@@ -9,4 +9,5 @@ export interface CardModel {
   percentage?: VotesModel;
   popularity?: string;
   votes: VotesModel;
+  voted?: boolean;
 }

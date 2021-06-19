@@ -12,13 +12,14 @@
   class="cards-container">
   <app-thumb-card
     *ngFor="let card of cardOptions; let i = index"
-    (vote)="parseCardInformation(true, $event, i)"
+    (vote)="parseCardInformation($event.voted, $event?.selectedOption, i)"
     [name]="card.name"
     [description]="card.description"
     [picture]="card.picture"
     [lastUpdated]="card.lastUpdated"
     [category]="card.category"
     [votes]="card.votes"
+    [alreadyVoted]="card.voted"
     [percentage]="card.percentage"
     [popularity]="card.popularity"
     [viewStyle]="viewOption.get('viewOrder').value" class="card">

@@ -30,7 +30,16 @@ export class ThumbRuleParentComponent implements OnInit {
     this.viewOption = this.formBuilder.group({
       viewOrder: [0]
     });
-    this.parseCardInformation(false);
+    this.cardOptions = this.cardOptions.map(cardInfo => {
+      return {
+        ...cardInfo,
+        picture: `url(../../../../../../assets/img/${cardInfo.picture})`,
+        percentage: { ...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative) },
+        lastUpdated: this.calculatePassedTime(cardInfo.lastUpdated),
+        popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down',
+        voted: false
+      };
+    });
   }
 
   calculateVotePercentage(positiveVotes: number, negativeVotes: number): VotesModel {
@@ -48,38 +57,27 @@ export class ThumbRuleParentComponent implements OnInit {
   }
 
   parseCardInformation(voted: boolean, voteType?: string, cardNumber?: number): void {
-    if (voted) {
-      this.cardOptions = this.cardOptions.map((cardInfo, index) => {
-        if (index === cardNumber) {
-          return {
-            ...cardInfo,
-            votes: voteType === 'up' ? {
-              ...cardInfo.votes,
-              positive: cardInfo.votes.positive + 1
-            } : {
-              ...cardInfo.votes,
-              negative: cardInfo.votes.negative + 1
-            },
-            percentage: { ...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative) },
-            lastUpdated: this.calculatePassedTime(moment().format()),
-            popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down'
-          };
-        } else {
-          return {
-            ...cardInfo
-          };
-        }
-      });
+    const currentCard = { ...this.cardOptions[cardNumber] };
+    if (voted && voteType) {
+      this.cardOptions[cardNumber] = {
+        ...currentCard,
+        votes: voteType === 'up' ? {
+          ...currentCard.votes,
+          positive: currentCard.votes.positive + 1
+        } : {
+          ...currentCard.votes,
+          negative: currentCard.votes.negative + 1
+        },
+        percentage: { ...this.calculateVotePercentage(currentCard.votes.positive, currentCard.votes.negative) },
+        lastUpdated: this.calculatePassedTime(moment().format()),
+        popularity: currentCard.votes.positive > currentCard.votes.negative ? 'up' : 'down',
+        voted: true
+      };
     } else {
-      this.cardOptions = this.cardOptions.map(cardInfo => {
-        return {
-          ...cardInfo,
-          picture: `url(../../../../../../assets/img/${cardInfo.picture})`,
-          percentage: { ...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative) },
-          lastUpdated: this.calculatePassedTime(cardInfo.lastUpdated),
-          popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down'
-        };
-      });
+      this.cardOptions[cardNumber] = {
+        ...currentCard,
+        voted: false
+      };
     }
   }
 
