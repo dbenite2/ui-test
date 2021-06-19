@@ -1,5 +1,18 @@
-<h2 class="title">Previous Rulings</h2>
-<section class="cards-container">
-  <app-thumb-card class="card"></app-thumb-card>
-  <app-thumb-card></app-thumb-card>
+<section class="thumbs-up-rule-title-container">
+  <h2 class="title">Previous Rulings</h2>
+  <app-thumb-dropdown
+    [control]="viewOption.get('viewOrder')"
+    [options]="dropdownOptions">
+  </app-thumb-dropdown>
+</section>
+<section
+  [ngClass]="{'grid': viewOption.get('viewOrder').value === 1,
+              'list': viewOption.get('viewOrder').value === 0}"
+  class="cards-container">
+  <app-thumb-card [viewStyle]="viewOption.get('viewOrder').value" class="card"></app-thumb-card>
+<!--  <app-thumb-card class="card"></app-thumb-card>-->
+<!--  <app-thumb-card class="card"></app-thumb-card>-->
+<!--  <app-thumb-card class="card"></app-thumb-card>-->
+<!--  <app-thumb-card class="card"></app-thumb-card>-->
+<!--  <app-thumb-card class="card"></app-thumb-card>-->
 </section>

@@ -1,6 +1,8 @@
 <section
-  [ngStyle]="{background: 'url(../../../../../../assets/img/' + picture + ')'}"
+  [ngClass]="{'list': viewStyle === 0}"
+  [ngStyle]="{background: cardImageStyle }"
   class="card-container">
+  <div class="gradient-background"></div>
   <header class="card-header">
     <div
       [ngClass]="{'thumbs-up': voted,

@@ -1,14 +1,35 @@
 @import "src/app/styles/constant";
 
-.title {
-  font-style: normal;
-  font-weight: 300;
-  color: $color-dark-gray;
+.thumbs-up-rule-title-container {
+  display: flex;
+  justify-content: space-between;
+  .title {
+    font-style: normal;
+    font-weight: 300;
+    color: $color-dark-gray;
+  }
 }
+
 .cards-container {
   display: flex;
   overflow-x: scroll;
   .card {
     margin-right: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .list {
+    flex-direction: column;
+  }
+  .grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .cards-container {
+    justify-content: space-between;
+    .card {
+      margin: 0 0 1.75rem;
+    }
   }
 }

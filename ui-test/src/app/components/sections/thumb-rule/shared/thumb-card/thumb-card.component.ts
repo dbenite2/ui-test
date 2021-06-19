@@ -14,10 +14,14 @@ export class ThumbCardComponent {
   @Input() lastUpdated: string = '1 Month ago';
   @Input() category: string = 'entertainment';
   @Input() votes: VotesModel;
+  @Input() viewStyle: number;
   @Output() vote: boolean;
   voted: boolean = false;
   currentVote = 'down';
+  cardImageStyle: string;
 
-  constructor() { }
+  constructor() {
+    this.cardImageStyle = `url(../../../../../../assets/img/${this.picture})`;
+  }
 
 }

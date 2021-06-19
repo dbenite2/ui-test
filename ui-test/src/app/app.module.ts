@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ThumbRuleParentComponent } from './components/sections/thumb-rule/thumb-rule-parent/thumb-rule-parent.component';
 import { ThumbRuleModule } from './components/sections/thumb-rule/thumb-rule.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ThumbRuleModule } from './components/sections/thumb-rule/thumb-rule.mod
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ThumbRuleModule
+    ThumbRuleModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
