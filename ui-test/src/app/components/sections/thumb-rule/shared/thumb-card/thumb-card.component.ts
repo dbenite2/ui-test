@@ -8,20 +8,18 @@ import { VotesModel } from '../../../../../core/models/votes.model';
 })
 export class ThumbCardComponent {
 
-  @Input() name: string = 'David Benitez';
-  @Input() description: string = 'Born in Atlanta and raised in Chicago, West was first known as a producer for Roc-A-Fella Records in the early 2000s, producing singles for several mainstream artists.';
-  @Input() picture: string = 'default.png';
-  @Input() lastUpdated: string = '1 Month ago';
-  @Input() category: string = 'entertainment';
+  @Input() name: string;
+  @Input() description: string;
+  @Input() picture: string;
+  @Input() lastUpdated: string;
+  @Input() category: string;
   @Input() votes: VotesModel;
+  @Input() percentage: VotesModel;
   @Input() viewStyle: number;
+  @Input() popularity: string;
   @Output() vote: boolean;
-  voted: boolean = false;
-  currentVote = 'down';
-  cardImageStyle: string;
 
   constructor() {
-    this.cardImageStyle = `url(../../../../../../assets/img/${this.picture})`;
   }
 
 }

@@ -8,6 +8,9 @@
     font-weight: 300;
     color: $color-dark-gray;
   }
+  .view-selector {
+    display: none;
+  }
 }
 
 .cards-container {
@@ -18,13 +21,18 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: $md) {
   .list {
     flex-direction: column;
   }
   .grid {
     flex-direction: row;
     flex-wrap: wrap;
+  }
+  .thumbs-up-rule-title-container {
+    .view-selector {
+      display: block;
+    }
   }
   .cards-container {
     justify-content: space-between;

@@ -1,6 +1,7 @@
 <section class="thumbs-up-rule-title-container">
   <h2 class="title">Previous Rulings</h2>
   <app-thumb-dropdown
+    class="view-selector"
     [control]="viewOption.get('viewOrder')"
     [options]="dropdownOptions">
   </app-thumb-dropdown>
@@ -9,10 +10,16 @@
   [ngClass]="{'grid': viewOption.get('viewOrder').value === 1,
               'list': viewOption.get('viewOrder').value === 0}"
   class="cards-container">
-  <app-thumb-card [viewStyle]="viewOption.get('viewOrder').value" class="card"></app-thumb-card>
-<!--  <app-thumb-card class="card"></app-thumb-card>-->
-<!--  <app-thumb-card class="card"></app-thumb-card>-->
-<!--  <app-thumb-card class="card"></app-thumb-card>-->
-<!--  <app-thumb-card class="card"></app-thumb-card>-->
-<!--  <app-thumb-card class="card"></app-thumb-card>-->
+  <app-thumb-card
+    *ngFor="let card of cardOptions"
+    [name]="card.name"
+    [description]="card.description"
+    [picture]="card.picture"
+    [lastUpdated]="card.lastUpdated"
+    [category]="card.category"
+    [votes]="card.votes"
+    [percentage]="card.percentage"
+    [popularity]="card.popularity"
+    [viewStyle]="viewOption.get('viewOrder').value" class="card">
+  </app-thumb-card>
 </section>

@@ -1,15 +1,15 @@
 <section
   [ngClass]="{'list': viewStyle === 0}"
-  [ngStyle]="{background: cardImageStyle }"
+  [ngStyle]="{background: picture }"
   class="card-container">
   <div class="gradient-background"></div>
   <header class="card-header">
     <div
-      [ngClass]="{'thumbs-up': voted,
-                  'thumbs-down': !voted}"
+      [ngClass]="{'thumbs-up': percentage.positive > percentage.negative,
+                  'thumbs-down': percentage.negative > percentage.positive}"
       class="icon-container">
       <img
-        src='../../../../../../assets/img/thumbs-{{currentVote}}.svg'
+        src='../../../../../../assets/img/thumbs-{{popularity}}.svg'
         alt="thumb-icon"
         class="thumbs-icon">
     </div>
@@ -42,22 +42,22 @@
   </section>
   <footer class="vote-count">
     <div
-      [ngStyle]="{flex: '1 1 45%' }"
+      [ngStyle]="{flex: '1 1 ' + percentage.positive + '%' }"
       class="votes-up">
       <img
         class="thumbs-icon"
         alt="thumbs-up"
         src="../../../../../../assets/img/thumbs-up.svg">
-      45%
+      {{percentage.positive}} %
     </div>
     <div
-      [ngStyle]="{flex: '1 1 55%' }"
+      [ngStyle]="{flex: '1 1 ' + percentage.negative + '%' }"
       class="votes-down">
+      {{percentage.negative}} %
       <img
         class="thumbs-icon"
         alt="thumbs-down"
         src="../../../../../../assets/img/thumbs-down.svg">
-      55%
     </div>
   </footer>
 </section>
