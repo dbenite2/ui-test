@@ -1,0 +1,14 @@
+@import "src/app/styles/constant";
+
+.title {
+  font-style: normal;
+  font-weight: 300;
+  color: $color-dark-gray;
+}
+.cards-container {
+  display: flex;
+  overflow-x: scroll;
+  .card {
+    margin-right: 1rem;
+  }
+}

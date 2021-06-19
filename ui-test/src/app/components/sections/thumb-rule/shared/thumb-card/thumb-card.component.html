@@ -1,19 +1,61 @@
-<section class="card-container">
-  <header class="card-title">
-    <img src='../../../../../../assets/img/{{picture}}'
-         alt="thumb-icon"
-         class="thumb-icon">
-    <h1 class="card-name">
-      {{name}}
-    </h1>
+<section
+  [ngStyle]="{background: 'url(../../../../../../assets/img/' + picture + ')'}"
+  class="card-container">
+  <header class="card-header">
+    <div
+      [ngClass]="{'thumbs-up': voted,
+                  'thumbs-down': !voted}"
+      class="icon-container">
+      <img
+        src='../../../../../../assets/img/thumbs-{{currentVote}}.svg'
+        alt="thumb-icon"
+        class="thumbs-icon">
+    </div>
+    <section class="card-content">
+      <h1 class="card-name">
+        {{name}}
+      </h1>
+      <article class="card-description">
+        {{description}}
+      </article>
+      <p class="last-updated">
+        {{lastUpdated}} in {{category}}
+      </p>
+    </section>
   </header>
-  <div class="button-container">
-    <button class="thumbs-up"></button>
-    <button class="thumbs-down"></button>
-    <button class="vote"></button>
-  </div>
+  <section class="button-container">
+    <button class="thumbs-up" aria-label="thumbs up">
+      <img
+        class="thumbs-icon"
+        alt="thumbs-up"
+        src="../../../../../../assets/img/thumbs-up.svg">
+    </button>
+    <button class="thumbs-down" aria-label="thumbs down">
+      <img
+        class="thumbs-icon"
+        alt="thumbs-down"
+        src="../../../../../../assets/img/thumbs-down.svg">
+    </button>
+    <button class="vote"> Vote Now </button>
+  </section>
   <footer class="vote-count">
-    <div class="votes-up"></div>
-    <div class="votes-down"></div>
+    <div
+      [ngStyle]="{flex: '1 1 45%' }"
+      class="votes-up">
+      <img
+        class="thumbs-icon"
+        alt="thumbs-up"
+        src="../../../../../../assets/img/thumbs-up.svg">
+      45%
+    </div>
+    <div
+      [ngStyle]="{flex: '1 1 55%' }"
+      class="votes-down">
+      <img
+        class="thumbs-icon"
+        alt="thumbs-down"
+        src="../../../../../../assets/img/thumbs-down.svg">
+      55%
+    </div>
   </footer>
 </section>
