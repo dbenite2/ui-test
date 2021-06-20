@@ -4,12 +4,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import * as cloneDeep from 'lodash/cloneDeep';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { DropdownModel } from '../../../../core/models/dropdown.model';
 import { dropdownOptions } from '../../../../utils/constants/dropdown-options.constant';
 import { CardModel } from '../../../../core/models/card.model';
 import { VotesModel } from '../../../../core/models/votes.model';
-import { Store } from '@ngrx/store';
 import { fetchCardsData, updateCardData } from '../store/actions/thumbs-rule.action';
 import { selectThumbsCards } from '../store/selectors/thumbs-rule.selector';
 
