@@ -18,6 +18,6 @@ export class ThumbsRuleService {
 
   getCardData(): CardModel[] {
     const localData = JSON.parse(localStorage.getItem('thumbsRule'));
-    return localData.cards || this.cardData;
+    return localData.cards.length > 0 ? localData.cards : this.cardData;
   }
 }
