@@ -4,7 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Requirements
 
-This projects needs of a minimum node version of 14.0.0, its not goint to work at all with versions like 10.0.0 or less
+This projects needs of a minimum node version of 14.0.0, its not goint to work at all with versions like 10.0.0 or less.
+It is recommended to have the latest version of the Angular CLI to avoid any conflict.
 
 ## Development server
  
