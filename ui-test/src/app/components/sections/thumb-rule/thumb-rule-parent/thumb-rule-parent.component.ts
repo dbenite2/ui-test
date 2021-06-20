@@ -36,10 +36,11 @@ export class ThumbRuleParentComponent implements OnInit, OnDestroy {
     });
     this.store.select(selectThumbsCards).subscribe((cards: CardModel[]) => {
       this.cardOptions = cards.map(cardInfo => {
+        const validTime = (new Date(cardInfo.lastUpdated)).getTime() > 0 ? cardInfo.lastUpdated : moment().format();
         return cardInfo.voted ? { ...cardInfo } : {
           ...cardInfo,
           percentage: { ...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative) },
-          lastUpdated: this.calculatePassedTime(cardInfo.lastUpdated),
+          lastUpdated: this.calculatePassedTime(validTime),
           popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down',
           voted: false
         };
