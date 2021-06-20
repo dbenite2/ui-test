@@ -2,8 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import * as cloneDeep from 'lodash/cloneDeep';
-import { select } from '@ngrx/core';
-import { take, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 
@@ -38,13 +36,13 @@ export class ThumbRuleParentComponent implements OnInit, OnDestroy {
     });
     this.store.select(selectThumbsCards).subscribe((cards: CardModel[]) => {
       this.cardOptions = cards.map(cardInfo => {
-          return cardInfo.voted ? {...cardInfo} : {
-            ...cardInfo,
-            percentage: { ...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative) },
-            lastUpdated: this.calculatePassedTime(cardInfo.lastUpdated),
-            popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down',
-            voted: false
-          };
+        return cardInfo.voted ? { ...cardInfo } : {
+          ...cardInfo,
+          percentage: { ...this.calculateVotePercentage(cardInfo.votes.positive, cardInfo.votes.negative) },
+          lastUpdated: this.calculatePassedTime(cardInfo.lastUpdated),
+          popularity: cardInfo.votes.positive > cardInfo.votes.negative ? 'up' : 'down',
+          voted: false
+        };
       });
     });
     this.store.dispatch(fetchCardsData());
@@ -67,16 +65,17 @@ export class ThumbRuleParentComponent implements OnInit, OnDestroy {
   parseCardInformation(voted: boolean, voteType?: string, cardNumber?: number): void {
     let currentCard = { ...this.cardOptions[cardNumber] };
     if (voted && voteType) {
+      const updatedVotes = voteType === 'up' ? {
+        ...currentCard.votes,
+        positive: currentCard.votes.positive + 1
+      } : {
+        ...currentCard.votes,
+        negative: currentCard.votes.negative + 1
+      };
       currentCard = {
         ...currentCard,
-        votes: voteType === 'up' ? {
-          ...currentCard.votes,
-          positive: currentCard.votes.positive + 1
-        } : {
-          ...currentCard.votes,
-          negative: currentCard.votes.negative + 1
-        },
-        percentage: { ...this.calculateVotePercentage(currentCard.votes.positive, currentCard.votes.negative) },
+        votes: { ...updatedVotes },
+        percentage: { ...this.calculateVotePercentage(updatedVotes.positive, updatedVotes.negative) },
         lastUpdated: this.calculatePassedTime(moment().format()),
         popularity: currentCard.votes.positive > currentCard.votes.negative ? 'up' : 'down',
         voted: true
@@ -87,7 +86,7 @@ export class ThumbRuleParentComponent implements OnInit, OnDestroy {
         voted: false
       };
     }
-    this.store.dispatch(updateCardData({data: currentCard, cardId: cardNumber}));
+    this.store.dispatch(updateCardData({ data: currentCard, cardId: cardNumber }));
   }
 
   ngOnDestroy(): void {

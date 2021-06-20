@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { VotesModel } from '../../../../../core/models/votes.model';
 
 @Component({
@@ -10,7 +10,6 @@ export class ThumbCardComponent {
 
   @Input() name: string;
   @Input() description: string;
-  @Input() picture: string;
   @Input() lastUpdated: string;
   @Input() category: string;
   @Input() votes: VotesModel;
@@ -20,9 +19,15 @@ export class ThumbCardComponent {
   @Input() alreadyVoted: boolean;
   @Output() vote = new EventEmitter<{ selectedOption?: string, voted: boolean }>();
   chosenOpinion: string;
+  pictureRoute: string;
+
+  @Input() set picture(pictureToSet: string) {
+    this.pictureRoute = `url(../../../../../../assets/img/${pictureToSet})`;
+  }
 
   constructor() {
   }
+
 
   handleOpinion(opinion: string): void {
     this.chosenOpinion = opinion;
