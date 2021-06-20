@@ -1,27 +1,29 @@
 # UiTest
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0. later updated to version 12.0.0
+
+## Requirements
+
+This projects needs of a minimum node version of 14.0.0, its not goint to work at all with versions like 10.0.0 or less
 
 ## Development server
+ 
+To run the application, first run `npm install` to get all the necessary dependecies of the project.
+Run `npm start` to see the application, wich it will be served at port 4200
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Folder structure
 
-## Code scaffolding
+The application was built following the next folder structure
+- components: here are located all the used components of the application
+- shared: small reusable components small enough to be used anywhere in the application
+- core: it contains the services and the principal models of the application
+- utils: constants and static code
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Internally, the components herarchy was divided by a big parent and small card children, having all the bussisnes logic to the parent.
 
-## Build
+The application also uses ngrx for state management.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Deployment
 
-## Running unit tests
+The application is also hosted using vercel technologies and can be found in the next url: https://thumb-rule-david-bentiez.vercel.app/
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
