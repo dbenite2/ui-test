@@ -31,7 +31,7 @@ Below you will find the minimum requirements we need to consider this challenge 
       2. "Vote now" text should change to the copy "Vote Again"
       3. The **gauge bar** below should reflect the changes in the registered data and **percentage should be updated**.
    3. If "Vote Again" button is pressed, all buttons should return to the initial state, and all modified copy texts should be reverted to their original state. The gauge bar, however, should persist the votes already posted.
-6. [ ] **All posted votes should be persisted** by any means, and should be exactly the same count, even if the page is refreshed. Use _any_ persistance mechanisms you prefer: LocalStorage, Cookies, IndexedDB, URL params, a Back End service (Firebase, DynamoDB, Redis, etc).
+6. [x] **All posted votes should be persisted** by any means, and should be exactly the same count, even if the page is refreshed. Use _any_ persistance mechanisms you prefer: LocalStorage, Cookies, IndexedDB, URL params, a Back End service (Firebase, DynamoDB, Redis, etc).
 
 > ✅ You won't start from scratch! In this repository you can find the file `index.html` which contains the source code of the website, and the section in which you should include the interactive component. Feel free to use, reuse, refactor and/or vandalize any CSS variables, class names and markup as a starting point.
 
@@ -72,3 +72,8 @@ Challenge complete?
 Send a link to your recruiter pointing to your repository (Github or Bitbucket). The **master** branch should contain the entire result, along with the instructions to run your code on the README.md file (if apples).
 
 Happy coding! 🙌
+
+
+### Developer Notes
+
+The application is located inside the ui-test folder, run it from there.
